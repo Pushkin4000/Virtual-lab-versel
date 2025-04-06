@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Placeholder Images</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .image-container { margin: 20px 0; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Placeholder Image Generator</h1>
+    <div id="imageContainer"></div>
+
+    <script>
+        const images = [
+            'dog.png',
+            'cat.png',
+            'car.png'
+        ];
+
+        function generatePlaceholder(name) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 200;
+            canvas.height = 200;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(0, 0, 200, 200);
+
+            // Text
+            ctx.fillStyle = '#666';
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(name, 100, 100);
+
+            // Add to page
+            const container = document.createElement('div');
+            container.className = 'image-container';
+            
+            const title = document.createElement('p');
+            title.textContent = name;
+            
+            const downloadBtn = document.createElement('button');
+            downloadBtn.textContent = 'Download';
+            downloadBtn.onclick = () => {
+                const link = document.createElement('a');
+                link.download = name;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
+            container.appendChild(title);
+            container.appendChild(canvas);
+            container.appendChild(downloadBtn);
+            document.getElementById('imageContainer').appendChild(container);
+        }
+
+        images.forEach(generatePlaceholder);
+    </script>
+</body>
+</html> 
